@@ -72,8 +72,25 @@ Common runtime variables:
 - `CHAT_LLM_BASE_URL`
 - `CHAT_LLM_MODEL`
 - `CHAT_LLM_TIMEOUT_MS`
+- `VITE_API_BASE_URL` for a separately hosted frontend build
 
 The chatbot works with `CHAT_LLM_PROVIDER=local` by default, which keeps responses deterministic and grounded in backend tool outputs. If you want an external OpenAI-compatible LLM to rewrite the final answer text, set `CHAT_LLM_PROVIDER`, `CHAT_LLM_API_KEY`, `CHAT_LLM_BASE_URL`, and `CHAT_LLM_MODEL`.
+
+## GitHub Pages deployment
+
+GitHub Pages can host the React frontend only. It cannot run the Node/Express API, MongoDB bridge, or serial ingestion process. For a working public dashboard you must:
+
+1. Host the backend API on a public HTTPS URL.
+2. Set the GitHub repository variable `VITE_API_BASE_URL` to that backend URL.
+3. Enable GitHub Pages in repository settings and choose GitHub Actions as the source.
+
+This repository now includes [`.github/workflows/deploy-pages.yml`](.github/workflows/deploy-pages.yml), which:
+
+- builds the Vite frontend
+- sets the correct Vite `base` path for GitHub Pages
+- deploys `frontend/dist` to GitHub Pages
+
+The frontend uses `VITE_API_BASE_URL` when provided and falls back to same-origin `/api` during local development.
 
 ## Install
 

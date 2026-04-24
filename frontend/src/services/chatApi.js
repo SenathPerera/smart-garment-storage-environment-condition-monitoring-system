@@ -1,3 +1,5 @@
+import { toApiUrl } from "./apiBase";
+
 async function parseJsonResponse(response) {
   const payload = await response.json().catch(() => null);
   if (!response.ok) {
@@ -7,7 +9,7 @@ async function parseJsonResponse(response) {
 }
 
 export async function sendChatMessage({ message, conversationId, zone }) {
-  const response = await fetch("/api/chat/message", {
+  const response = await fetch(toApiUrl("/api/chat/message"), {
     method: "POST",
     headers: {
       "Content-Type": "application/json"
@@ -23,12 +25,12 @@ export async function sendChatMessage({ message, conversationId, zone }) {
 }
 
 export async function getChatHistory(conversationId) {
-  const response = await fetch(`/api/chat/history?conversationId=${encodeURIComponent(conversationId)}`);
+  const response = await fetch(toApiUrl(`/api/chat/history?conversationId=${encodeURIComponent(conversationId)}`));
   return parseJsonResponse(response);
 }
 
 export async function clearChatHistory(conversationId) {
-  const response = await fetch(`/api/chat/history?conversationId=${encodeURIComponent(conversationId)}`, {
+  const response = await fetch(toApiUrl(`/api/chat/history?conversationId=${encodeURIComponent(conversationId)}`), {
     method: "DELETE"
   });
   return parseJsonResponse(response);

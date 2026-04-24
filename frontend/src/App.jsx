@@ -8,6 +8,7 @@ import logoImage from "../../src/images/logo.png";
 import mlIcon from "../../src/images/ml.png";
 import timelineIcon from "../../src/images/timeline.png";
 import zoneIcon from "../../src/images/zone.png";
+import { toApiUrl } from "./services/apiBase";
 
 const POLL_INTERVAL_MS = 5000;
 const DEFAULT_ZONE = "zone1";
@@ -210,7 +211,7 @@ function buildRangeQuery(activeRange, zone) {
 }
 
 async function fetchJson(url) {
-  const response = await fetch(url);
+  const response = await fetch(toApiUrl(url));
   if (!response.ok) {
     const payload = await response.json().catch(() => null);
     throw new Error(payload?.message || `Request failed for ${url}`);

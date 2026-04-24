@@ -8,6 +8,7 @@ const root = fileURLToPath(new URL(".", import.meta.url));
 
 export default defineConfig({
   root,
+  base: process.env.VITE_BASE_PATH || "/",
   plugins: [react()],
   server: {
     host: "0.0.0.0",
