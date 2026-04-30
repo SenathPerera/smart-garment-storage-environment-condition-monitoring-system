@@ -43,7 +43,10 @@ function createToolRegistry(context) {
       }
 
       const args = call.args && typeof call.args === "object" ? call.args : {};
+      const start = Date.now();                                                     
+      console.log(`[ToolRegistry] Executing tool: ${call.name}`); 
       const result = await tool.execute(args);
+      console.log(`[ToolRegistry] Tool execution completed in ${Date.now() - start}ms`);
       return {
         name: call.name,
         args,
