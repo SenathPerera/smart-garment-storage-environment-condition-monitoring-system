@@ -540,6 +540,9 @@ function createChatService({
     const context = deriveContext(message, zone, history);
     const plan = buildToolPlan(message, context);
 
+    console.log(`[ChatService] Intent detected: ${plan.intent} for zone: ${context.zone}`);
+    console.log(`[ChatService] Tools to execute: ${plan.toolCalls.map(t => t.name).join(', ')}`);
+
     logger.info?.(`Chat request ${effectiveConversationId}: intent=${plan.intent} zone=${context.zone}`);
 
     await persistMessage({
